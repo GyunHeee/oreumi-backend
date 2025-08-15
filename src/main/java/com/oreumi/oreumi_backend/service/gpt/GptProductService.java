@@ -21,21 +21,25 @@ public class GptProductService {
 
     @Value("${openai.api.key}")
     private String openaiApiKey;
+    @Value("${openai.api.url}")
+    private String url;
+    @Value("${openai.model}")
+    private String model;
 
     public GptProductResponse generateProduct(String productInfo) {
-        String apiUrl = "https://api.openai.com/v1/chat/completions";
+        String apiUrl = url;
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setBearerAuth(openaiApiKey);
 
-        // 프롬포트
+        // 프롬포쵀트
         String prompt = "아래 상품 정보를 기반으로 스토어에 올릴 제목과 상품 설명을 만들어줘.\n" +
                 "상품 정보: " + productInfo + "\n" +
                 "출력 형식: JSON {\"title\": \"제목\", \"description\": \"설명\"}";
 
         Map<String, Object> body = new HashMap<>();
-        body.put("model", "gpt-4o-mini");
+        body.put("model", model);
         body.put("messages", List.of(
                 Map.of("role", "user", "content", prompt)
         ));
