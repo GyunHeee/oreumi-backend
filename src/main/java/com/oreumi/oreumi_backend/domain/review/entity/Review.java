@@ -4,11 +4,17 @@ import com.oreumi.oreumi_backend.common.entity.BaseEntity;
 import com.oreumi.oreumi_backend.domain.history.entity.History;
 import com.oreumi.oreumi_backend.domain.review.ReviewStyle;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Entity
 @Table(name = "Review")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 public class Review extends BaseEntity {
 
     @Id
@@ -26,4 +32,11 @@ public class Review extends BaseEntity {
 
     @OneToMany(mappedBy = "review")
     private List<History> histories;
+
+    @Builder
+    public Review(String reviewText, ReviewStyle reviewStyle, String generatedReply) {
+        this.reviewText = reviewText;
+        this.reviewStyle = reviewStyle;
+        this.generatedReply = generatedReply;
+    }
 }

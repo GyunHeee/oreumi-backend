@@ -46,7 +46,6 @@ public class GptReviewService {
         body.put("messages", List.of(Map.of("role", "user", "content", prompt)));
 
         HttpEntity<Map<String, Object>> request = new HttpEntity<>(body, headers);
-
         ResponseEntity<Map> response = restTemplate.postForEntity(url, request, Map.class);
 
         List choices = (List) response.getBody().get("choices");
