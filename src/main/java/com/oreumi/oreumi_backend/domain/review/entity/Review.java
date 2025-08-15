@@ -24,9 +24,6 @@ public class Review extends BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String generatedReply;
 
-    @Column(columnDefinition = "TEXT")
-    private String inputText;
-
     @OneToMany(mappedBy = "review")
     private List<History> histories;
 }
