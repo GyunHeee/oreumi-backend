@@ -40,19 +40,23 @@ public class GptProductService {
                 Map.of("role", "user", "content", prompt)
         ));
 
-        HttpEntity<Map<String, Object>> request = new HttpEntity<>(body, headers);
-        ResponseEntity<Map> response = restTemplate.postForEntity(apiUrl, request, Map.class);
+        try {
+            HttpEntity<Map<String, Object>> request = new HttpEntity<>(body, headers);
+            ResponseEntity<Map> response = restTemplate.postForEntity(apiUrl, request, Map.class);
 
-        // JSON parse
-        List choices = (List) response.getBody().get("choices");
-        Map firstChoice = (Map) choices.get(0);
-        Map message = (Map) firstChoice.get("message");
-        String gptText = (String) message.get("content");
+            List choices = (List) response.getBody().get("choices");
+            Map firstChoice = (Map) choices.get(0);
+            Map message = (Map) firstChoice.get("message");
+            String gptText = (String) message.get("content");
 
-        gptText = gptText.replace("\n", "");
-        String title = gptText.split("\"title\":")[1].split(",")[0].replace("\"", "").trim();
-        String description = gptText.split("\"description\":")[1].replace("}", "").replace("\"", "").trim();
+            gptText = gptText.replace("\n", "");
+            String title = gptText.split("\"title\":")[1].split(",")[0].replace("\"", "").trim();
+            String description = gptText.split("\"description\":")[1].replace("}", "").replace("\"", "").trim();
 
-        return new GptProductResponse(title, description);
+            return new GptProductResponse(title, description);
+
+        } catch (Exception e) {
+            throw new RuntimeException("GPT API 호출 실패: " + e.getMessage());
+        }
     }
 }

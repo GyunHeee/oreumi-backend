@@ -3,16 +3,14 @@ package com.oreumi.oreumi_backend.domain.product.entity;
 import com.oreumi.oreumi_backend.common.entity.BaseEntity;
 import com.oreumi.oreumi_backend.domain.history.entity.History;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
 @Entity
 @Table(name = "Product")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Product extends BaseEntity {
 
     @Id
@@ -29,4 +27,11 @@ public class Product extends BaseEntity {
 
     @OneToMany(mappedBy = "product")
     private List<History> histories;
+
+    @Builder
+    public Product(String inputText, String generatedTitle, String generatedDescription) {
+        this.inputText = inputText;
+        this.generatedTitle = generatedTitle;
+        this.generatedDescription = generatedDescription;
+    }
 }
