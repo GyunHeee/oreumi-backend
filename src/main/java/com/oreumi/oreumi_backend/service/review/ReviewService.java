@@ -35,4 +35,16 @@ public class ReviewService {
                 savedReview.getGeneratedReply()
         );
     }
+
+    public ReviewResponse findById(Long reviewId) {
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 리뷰ID 입니다."));
+
+        return new ReviewResponse(
+                review.getReviewId(),
+                review.getReviewText(),
+                review.getReviewStyle(),
+                review.getGeneratedReply()
+        );
+    }
 }

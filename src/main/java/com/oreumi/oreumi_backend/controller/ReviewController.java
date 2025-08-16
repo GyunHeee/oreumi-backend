@@ -9,10 +9,7 @@ import com.oreumi.oreumi_backend.service.review.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,5 +27,10 @@ public class ReviewController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(new ApiResponse<>(e.getMessage()));
         }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<ReviewResponse>> findById(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(new ApiResponse<>(reviewService.findById(id)));
     }
 }
