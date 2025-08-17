@@ -57,45 +57,5 @@ public class HistoryService {
                 .build();
     }
 
-    /**
-     * 상품 상세 정보 조회
-     * @param productId 상품 ID
-     * @return 상품 상세 정보
-     */
-    public ProductDetailResponse getProductDetail(Long productId) {
-        History history = historyRepository.findAll().stream()
-                .filter(h -> h.getHistoryType() == HistoryType.PRODUCT && 
-                           h.getProduct().getProductId().equals(productId))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("상품을 찾을 수 없습니다."));
-
-        return ProductDetailResponse.builder()
-                .productId(history.getProduct().getProductId())
-                .inputText(history.getProduct().getInputText())
-                .generatedTitle(history.getProduct().getGeneratedTitle())
-                .generatedDescription(history.getProduct().getGeneratedDescription())
-                .createdAt(history.getCreatedAt())
-                .build();
-    }
-
-    /**
-     * 리뷰 상세 정보 조회
-     * @param reviewId 리뷰 ID
-     * @return 리뷰 상세 정보
-     */
-    public ReviewDetailResponse getReviewDetail(Long reviewId) {
-        History history = historyRepository.findAll().stream()
-                .filter(h -> h.getHistoryType() == HistoryType.REVIEW && 
-                           h.getReview().getReviewId().equals(reviewId))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("리뷰를 찾을 수 없습니다."));
-
-        return ReviewDetailResponse.builder()
-                .reviewId(history.getReview().getReviewId())
-                .reviewText(history.getReview().getReviewText())
-                .reviewStyle(history.getReview().getReviewStyle())
-                .generatedReply(history.getReview().getGeneratedReply())
-                .createdAt(history.getCreatedAt())
-                .build();
-    }
+    
 }
