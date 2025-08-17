@@ -4,6 +4,7 @@ import com.oreumi.oreumi_backend.domain.review.entity.Review;
 import com.oreumi.oreumi_backend.dto.gpt.GptReviewRequest;
 import com.oreumi.oreumi_backend.dto.gpt.GptReviewResponse;
 import com.oreumi.oreumi_backend.dto.review.ReviewResponse;
+import com.oreumi.oreumi_backend.exception.ReviewNotFoundException;
 import com.oreumi.oreumi_backend.repository.review.ReviewRepository;
 import com.oreumi.oreumi_backend.service.gpt.GptReviewService;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +39,7 @@ public class ReviewService {
 
     public ReviewResponse findById(Long reviewId) {
         Review review = reviewRepository.findById(reviewId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 리뷰ID 입니다."));
+                .orElseThrow(() -> new ReviewNotFoundException(reviewId));
 
         return new ReviewResponse(
                 review.getReviewId(),

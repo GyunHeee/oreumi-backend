@@ -4,6 +4,7 @@ import com.oreumi.oreumi_backend.domain.product.entity.Product;
 import com.oreumi.oreumi_backend.dto.gpt.GptProductRequest;
 import com.oreumi.oreumi_backend.dto.gpt.GptProductResponse;
 import com.oreumi.oreumi_backend.dto.product.ProductResponse;
+import com.oreumi.oreumi_backend.exception.ProductNotFoundException;
 import com.oreumi.oreumi_backend.repository.product.ProductRepository;
 import com.oreumi.oreumi_backend.service.gpt.GptProductService;
 import lombok.RequiredArgsConstructor;
@@ -41,7 +42,7 @@ public class ProductService {
 
     public ProductResponse findById(Long id) {
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new IllegalStateException("존재하지 않는 아이디입니다."));
+                .orElseThrow(() -> new ProductNotFoundException(id));
 
         return new ProductResponse(
                 product.getProductId(),
