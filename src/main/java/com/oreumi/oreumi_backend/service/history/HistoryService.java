@@ -1,8 +1,6 @@
 package com.oreumi.oreumi_backend.service.history;
 
 import com.oreumi.oreumi_backend.controller.dto.HistoryResponse;
-import com.oreumi.oreumi_backend.controller.dto.ProductDetailResponse;
-import com.oreumi.oreumi_backend.controller.dto.ReviewDetailResponse;
 import com.oreumi.oreumi_backend.domain.history.entity.History;
 import com.oreumi.oreumi_backend.domain.history.HistoryType;
 import com.oreumi.oreumi_backend.repository.history.HistoryRepository;
@@ -20,15 +18,10 @@ public class HistoryService {
 
     private final HistoryRepository historyRepository;
 
-    /**
-     * 히스토리 데이터 조회
-     * @return 히스토리 응답 데이터
-     */
+
     public HistoryResponse getHistoryData() {
-        // 모든 히스토리 조회
         List<History> allHistories = historyRepository.findAllByOrderByCreatedAtDesc();
         
-        // 상품 히스토리 필터링 및 변환
         List<HistoryResponse.ProductHistoryItem> productHistory = allHistories.stream()
                 .filter(history -> history.getHistoryType() == HistoryType.PRODUCT)
                 .map(history -> HistoryResponse.ProductHistoryItem.builder()
@@ -39,7 +32,6 @@ public class HistoryService {
                         .build())
                 .collect(Collectors.toList());
 
-        // 리뷰 히스토리 필터링 및 변환
         List<HistoryResponse.ReviewHistoryItem> reviewHistory = allHistories.stream()
                 .filter(history -> history.getHistoryType() == HistoryType.REVIEW)
                 .map(history -> HistoryResponse.ReviewHistoryItem.builder()
