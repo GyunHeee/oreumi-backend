@@ -12,7 +12,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MyPageResponse {
+public class HistoryResponse {
     
     private List<ProductHistoryItem> productHistory;
     private List<ReviewHistoryItem> reviewHistory;
