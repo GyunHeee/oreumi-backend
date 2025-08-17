@@ -20,10 +20,10 @@ public class HistoryService {
 
 
     public HistoryResponse getHistoryData() {
-        List<History> allHistories = historyRepository.findAllByOrderByCreatedAtDesc();
+        List<History> productHistories = historyRepository.findByHistoryTypeOrderByCreatedAtDesc(HistoryType.PRODUCT);
+        List<History> reviewHistories = historyRepository.findByHistoryTypeOrderByCreatedAtDesc(HistoryType.REVIEW);
         
-        List<HistoryResponse.ProductHistoryItem> productHistory = allHistories.stream()
-                .filter(history -> history.getHistoryType() == HistoryType.PRODUCT)
+        List<HistoryResponse.ProductHistoryItem> productHistory = productHistories.stream()
                 .map(history -> HistoryResponse.ProductHistoryItem.builder()
                         .historyId(history.getHistoryId())
                         .productId(history.getProduct().getProductId())
@@ -32,8 +32,7 @@ public class HistoryService {
                         .build())
                 .collect(Collectors.toList());
 
-        List<HistoryResponse.ReviewHistoryItem> reviewHistory = allHistories.stream()
-                .filter(history -> history.getHistoryType() == HistoryType.REVIEW)
+        List<HistoryResponse.ReviewHistoryItem> reviewHistory = reviewHistories.stream()
                 .map(history -> HistoryResponse.ReviewHistoryItem.builder()
                         .historyId(history.getHistoryId())
                         .reviewId(history.getReview().getReviewId())
