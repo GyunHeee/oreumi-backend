@@ -6,13 +6,17 @@ import com.oreumi.oreumi_backend.domain.product.entity.Product;
 import com.oreumi.oreumi_backend.domain.review.entity.Review;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "History")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Getter
+@Builder
 public class History extends BaseEntity {
 
     @Id
