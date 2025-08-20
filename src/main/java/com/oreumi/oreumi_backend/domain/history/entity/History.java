@@ -24,11 +24,11 @@ public class History extends BaseEntity {
     private Long historyId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id", nullable = false)
+    @JoinColumn(name = "product_id", nullable = true)
     private Product product;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "review_id", nullable = false)
+    @JoinColumn(name = "review_id", nullable = true)
     private Review review;
     
     @Enumerated(EnumType.STRING)
