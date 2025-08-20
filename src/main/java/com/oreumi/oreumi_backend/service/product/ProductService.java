@@ -1,10 +1,13 @@
 package com.oreumi.oreumi_backend.service.product;
 
+import com.oreumi.oreumi_backend.domain.history.HistoryType;
+import com.oreumi.oreumi_backend.domain.history.entity.History;
 import com.oreumi.oreumi_backend.domain.product.entity.Product;
 import com.oreumi.oreumi_backend.dto.gpt.GptProductRequest;
 import com.oreumi.oreumi_backend.dto.gpt.GptProductResponse;
 import com.oreumi.oreumi_backend.dto.product.ProductResponse;
 import com.oreumi.oreumi_backend.exception.ProductNotFoundException;
+import com.oreumi.oreumi_backend.repository.history.HistoryRepository;
 import com.oreumi.oreumi_backend.repository.product.ProductRepository;
 import com.oreumi.oreumi_backend.service.gpt.GptProductService;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +24,7 @@ public class ProductService {
 
     private final GptProductService gptProductService;
     private final ProductRepository productRepository;
+    private final HistoryRepository historyRepository;
 
     @Transactional
     public ProductResponse getGptProduct(String inputText) {
@@ -33,11 +37,19 @@ public class ProductService {
                 .build();
 
         Product savedProduct = productRepository.save(product);
+        
+        // 상품 생성 시 히스토리 자동 생성
+        History history = History.builder()
+                .historyType(HistoryType.PRODUCT)
+                .product(savedProduct)
+                .build();
+        historyRepository.save(history);
+        
         return new ProductResponse(
-                product.getProductId(),
-                product.getInputText(),
-                product.getGeneratedTitle(),
-                product.getGeneratedDescription());
+                savedProduct.getProductId(),
+                savedProduct.getInputText(),
+                savedProduct.getGeneratedTitle(),
+                savedProduct.getGeneratedDescription());
     }
 
     public ProductResponse findById(Long id) {
