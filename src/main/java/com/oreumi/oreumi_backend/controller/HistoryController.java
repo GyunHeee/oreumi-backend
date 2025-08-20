@@ -1,12 +1,13 @@
 package com.oreumi.oreumi_backend.controller;
 
 import com.oreumi.oreumi_backend.controller.dto.HistoryResponse;
-import com.oreumi.oreumi_backend.domain.review.ReviewStyle;
 import com.oreumi.oreumi_backend.service.history.HistoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/history")
@@ -22,9 +23,4 @@ public class HistoryController {
         return historyService.getHistoryData();
     }
 
-    @Operation(summary = "리뷰 어조 옵션 조회", description = "사용 가능한 리뷰 어조 옵션들을 조회합니다.")
-    @GetMapping("/review-styles")
-    public ReviewStyle[] getReviewStyles() {
-        return ReviewStyle.values();
-    }
 }
