@@ -38,10 +38,10 @@ public class ProductService {
 
         Product savedProduct = productRepository.save(product);
         
-        // 상품 생성 시 히스토리 자동 생성
         History history = History.builder()
                 .historyType(HistoryType.PRODUCT)
                 .product(savedProduct)
+                .review(null)
                 .build();
         historyRepository.save(history);
         
