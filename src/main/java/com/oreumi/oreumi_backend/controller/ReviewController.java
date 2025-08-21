@@ -21,7 +21,7 @@ public class ReviewController {
 
     private final ReviewService reviewService;
 
-    @Operation(summary = "라뷰 생성", description = "GPT API로 리뷰에 대한 응답을 생성합니다.")
+    @Operation(summary = "리뷰 생성", description = "GPT API로 리뷰에 대한 응답을 생성합니다.")
     @PostMapping("/generate")
     public ResponseEntity<ApiResponse<ReviewResponse>> generateGptReview(@RequestBody GptReviewRequest request) {
         try {
