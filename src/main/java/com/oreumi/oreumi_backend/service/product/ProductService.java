@@ -42,6 +42,7 @@ public class ProductService {
         History history = History.builder()
                 .historyType(HistoryType.PRODUCT)
                 .product(savedProduct)
+                .review(null)  // 명시적으로 null 설정
                 .build();
         historyRepository.save(history);
         

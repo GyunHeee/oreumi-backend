@@ -37,6 +37,7 @@ public class ReviewService {
         // 리뷰 생성 시 히스토리 자동 생성
         History history = History.builder()
                 .historyType(HistoryType.REVIEW)
+                .product(null)  // 명시적으로 null 설정
                 .review(savedReview)
                 .build();
         historyRepository.save(history);
