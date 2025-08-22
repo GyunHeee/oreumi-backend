@@ -25,6 +25,7 @@ public class HistoryResponse {
         private Long historyId;
         private Long productId;
         private String generatedTitle;
+        private String generatedDescription;
         private LocalDateTime createdAt;
     }
     

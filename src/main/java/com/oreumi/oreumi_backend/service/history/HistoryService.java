@@ -27,6 +27,7 @@ public class HistoryService {
                         .historyId(history.getHistoryId())
                         .productId(history.getProduct().getProductId())
                         .generatedTitle(history.getProduct().getGeneratedTitle())
+                        .generatedDescription(history.getProduct().getGeneratedDescription())
                         .createdAt(history.getCreatedAt())
                         .build())
                 .collect(Collectors.toList());
