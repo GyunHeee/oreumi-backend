@@ -14,10 +14,14 @@ public interface HistoryRepository extends JpaRepository<History, Long> {
     
     // List<History> findByHistoryTypeOrderByCreatedAtDesc(HistoryType historyType);
 
-    @Query("SELECT h FROM History h LEFT JOIN FETCH h.product ORDER BY h.createdAt DESC")
-    List<History> findAllProductHistories();
+    @Query("SELECT h FROM History h LEFT JOIN FETCH h.product " +
+            "WHERE h.historyType = :type " +
+            "ORDER BY h.createdAt DESC")
+    List<History> findProductHistoriesByType(@Param("type") HistoryType type);
 
-    @Query("SELECT h FROM History h LEFT JOIN FETCH h.review ORDER BY h.createdAt DESC")
-    List<History> findAllReviewHistories();
+    @Query("SELECT h FROM History h LEFT JOIN FETCH h.review " +
+            "WHERE h.historyType = :type " +
+            "ORDER BY h.createdAt DESC")
+    List<History> findReviewHistoriesByType(@Param("type") HistoryType type);
 
 } 

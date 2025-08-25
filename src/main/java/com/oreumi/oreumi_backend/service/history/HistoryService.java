@@ -19,8 +19,8 @@ public class HistoryService {
     private final HistoryRepository historyRepository;
 
     public HistoryResponse getHistoryData() {
-        List<History> productHistories = historyRepository.findAllProductHistories();
-        List<History> reviewHistories = historyRepository.findAllReviewHistories();
+        List<History> productHistories = historyRepository.findProductHistoriesByType(HistoryType.PRODUCT);
+        List<History> reviewHistories = historyRepository.findReviewHistoriesByType(HistoryType.REVIEW);
         
         List<HistoryResponse.ProductHistoryItem> productHistory = productHistories.stream()
                 .map(history -> HistoryResponse.ProductHistoryItem.builder()
